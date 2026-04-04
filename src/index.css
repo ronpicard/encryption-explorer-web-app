@@ -1,0 +1,77 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: #000000;
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: #000000;
+  color: #e8e8e8;
+  position: relative;
+}
+
+/* Soft cyber aurora — sits behind the app */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 45% at 15% 5%, rgba(34, 211, 238, 0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 40% at 95% 45%, rgba(192, 132, 252, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 35% at 40% 95%, rgba(244, 114, 182, 0.06) 0%, transparent 48%),
+    radial-gradient(ellipse 40% 30% at 75% 10%, rgba(56, 189, 248, 0.05) 0%, transparent 45%);
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body::before {
+    animation: aurora-drift 28s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(2%, 1.5%) scale(1.03);
+  }
+  66% {
+    transform: translate(-1.5%, 2%) scale(1.02);
+  }
+  100% {
+    transform: translate(1%, -1%) scale(1);
+  }
+}
+
+#root {
+  min-height: 100svh;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.28);
+  color: #fafafa;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body::before {
+    animation: none;
+  }
+}
