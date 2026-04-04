@@ -3,9 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ronpicard/encryption-explorer-web-app.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "deploy": "node scripts/deploy.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

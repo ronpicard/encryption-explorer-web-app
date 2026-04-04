@@ -26,16 +26,33 @@ Then open the URL Vite prints (usually `http://localhost:5173`).
 | `npm run build` | Production build to `dist/` |
 | `npm run preview` | Serve the production build locally |
 | `npm run lint` | Run ESLint |
+| `npm run deploy` | Production build with the correct `/repo/` base and push `dist/` to the `gh-pages` branch ([gh-pages](https://github.com/tschaub/gh-pages)) |
 
 ## Deploy (GitHub Pages)
 
-The repo includes [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml). It builds on every push to `main` and publishes `dist/` to Pages.
+GitHub only allows **one** Pages source: either **GitHub Actions** or **Deploy from a branch**. Pick one.
 
-1. On GitHub: **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
-2. Push `main` (including the workflow and `vite.config.js` changes). Check **Actions** for the run; when it finishes, the site is at `https://<your-username>.github.io/encryption-explorer-web-app/`.
-3. If your repository name is not `encryption-explorer-web-app`, edit `repoName` in `vite.config.js` so it matches the repo (path segment after `github.io`).
+### Option A — `npm run deploy` (from your machine)
 
-Local builds use base `/` so `npm run preview` works. CI sets `CI=true`, so the published build uses `/encryption-explorer-web-app/` asset paths.
+1. Set **`repository.url`** in `package.json` to your real GitHub repo (default is `https://github.com/ronpicard/encryption-explorer-web-app.git`). The deploy script reads the repo name from that URL for Vite’s `base`.
+2. On GitHub: **Settings → Pages → Build and deployment**, set **Source** to **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**. (If you previously chose **GitHub Actions**, switch to this so pushes to `gh-pages` actually go live.)
+3. From the project root, with `git` configured and `origin` pointing at GitHub:
+
+   ```bash
+   npm run deploy
+   ```
+
+   That runs [`scripts/deploy.mjs`](scripts/deploy.mjs): `vite build --base=/<repo>/` then `gh-pages -d dist`.
+
+4. Site URL: `https://ronpicard.github.io/<repository-name>/` (repository name must match `package.json` `repository.url`).
+
+### Option B — GitHub Actions on every push
+
+The repo includes [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml). Use **Settings → Pages → Source: GitHub Actions** (not “Deploy from a branch”). Push to `main` (or `master`); check the **Actions** tab if it fails.
+
+For this path, `vite.config.js` uses `GITHUB_REPOSITORY` in CI so `base` matches the repo.
+
+`npm run build` (without deploy) still uses base `/` locally so `npm run preview` works.
 
 ## Project layout
 

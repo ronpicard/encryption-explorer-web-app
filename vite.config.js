@@ -2,10 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // GitHub Pages project URL: https://<user>.github.io/<repo>/
-// If you rename the repo, update this path to match (leading + trailing slash).
-const repoName = 'encryption-explorer-web-app'
+// In CI, GITHUB_REPOSITORY is "owner/repo" — use repo name so base always matches the GitHub repo.
+const repoFromEnv = process.env.GITHUB_REPOSITORY?.split('/').pop()
+const basePath =
+  process.env.CI && repoFromEnv ? `/${repoFromEnv}/` : '/'
 
 export default defineConfig({
-  base: process.env.CI ? `/${repoName}/` : '/',
+  base: basePath,
   plugins: [react()],
 })
