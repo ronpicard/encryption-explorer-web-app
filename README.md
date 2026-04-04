@@ -49,3 +49,4 @@ Local builds use base `/` so `npm run preview` works. CI sets `CI=true`, so the 
 ## License
 
 Private project (`"private": true` in `package.json`). Adjust if you publish the repo.
+
