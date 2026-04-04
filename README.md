@@ -27,6 +27,16 @@ Then open the URL Vite prints (usually `http://localhost:5173`).
 | `npm run preview` | Serve the production build locally |
 | `npm run lint` | Run ESLint |
 
+## Deploy (GitHub Pages)
+
+The repo includes [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml). It builds on every push to `main` and publishes `dist/` to Pages.
+
+1. On GitHub: **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
+2. Push `main` (including the workflow and `vite.config.js` changes). Check **Actions** for the run; when it finishes, the site is at `https://<your-username>.github.io/encryption-explorer-web-app/`.
+3. If your repository name is not `encryption-explorer-web-app`, edit `repoName` in `vite.config.js` so it matches the repo (path segment after `github.io`).
+
+Local builds use base `/` so `npm run preview` works. CI sets `CI=true`, so the published build uses `/encryption-explorer-web-app/` asset paths.
+
 ## Project layout
 
 - `src/App.jsx` — Shell: topic navigation, sorting (by time / by strength), topic panels
