@@ -1,9 +1,8 @@
 :root {
-  /* Fluid horizontal padding + notches / home indicator */
-  --app-pad-x: max(0.85rem, env(safe-area-inset-left, 0px));
-  --app-pad-x-end: max(0.85rem, env(safe-area-inset-right, 0px));
+  /* Edge-to-edge layout; pad only for safe areas + a little breathing room */
+  --app-pad-x: max(1rem, env(safe-area-inset-left, 0px), 1.5vw);
+  --app-pad-x-end: max(1rem, env(safe-area-inset-right, 0px), 1.5vw);
   --app-pad-y: max(0.75rem, env(safe-area-inset-top, 0px));
-  --content-max: min(100%, 110rem);
 
   --bg-page: #000000;
   --bg-raised: #0a0a0a;
@@ -27,8 +26,10 @@
 .crypto-app {
   box-sizing: border-box;
   width: 100%;
-  max-width: var(--content-max);
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
+  min-height: 100svh;
+  min-height: 100dvh;
   padding: max(1.25rem, var(--app-pad-y)) var(--app-pad-x) max(2rem, env(safe-area-inset-bottom, 0.75rem))
     var(--app-pad-x-end);
   font-family: 'Segoe UI', system-ui, sans-serif;
@@ -292,10 +293,10 @@
 }
 
 .timeline-tab {
-  flex: 0 0 auto;
+  flex: 1 1 0;
   scroll-snap-align: start;
   min-width: 8.5rem;
-  max-width: 14rem;
+  max-width: none;
   padding: 0.58rem 0.68rem;
   touch-action: manipulation;
   text-align: left;

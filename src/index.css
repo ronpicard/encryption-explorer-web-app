@@ -10,10 +10,12 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  width: 100%;
 }
 
 body {
   margin: 0;
+  width: 100%;
   min-height: 100svh;
   min-height: 100dvh;
   background: #000000;
