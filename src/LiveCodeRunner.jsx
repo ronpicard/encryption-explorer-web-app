@@ -33,7 +33,7 @@ export function LiveCodeRunner({ topicId }) {
 
 function Out({ children }) {
   return (
-    <div className="live-out" role="status">
+    <div className="live-out">
       <span className="live-out__label">Result</span>
       <output className="live-out__value">{children}</output>
     </div>

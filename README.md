@@ -25,6 +25,8 @@ Then open the URL Vite prints (usually `http://localhost:5173`).
 | `npm run dev`  | Start dev server with HMR |
 | `npm run build` | Production build to `dist/` |
 | `npm run preview` | Serve the production build locally |
+| `npm test` | Run unit tests once (Vitest) |
+| `npm run test:watch` | Run unit tests in watch mode |
 | `npm run lint` | Run ESLint |
 | `npm run deploy` | Production build with the correct `/repo/` base and push `dist/` to the `gh-pages` branch ([gh-pages](https://github.com/tschaub/gh-pages)) |
 

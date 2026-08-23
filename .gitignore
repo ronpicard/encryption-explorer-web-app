@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+/.cursor/rules/ai-rules/
+/.clinerules/ai-rules/
+/.opencode/rules/ai-rules/

@@ -26,6 +26,7 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: npm test
       # GitHub Actions sets CI=true; vite uses that to set base to /encryption-explorer-web-app/
       - run: npm run build
 

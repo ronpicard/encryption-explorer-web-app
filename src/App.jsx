@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
-import { DISCLAIMER, GLOSSARY, TOPICS } from './cryptoTopics'
+import { DISCLAIMER, GLOSSARY, TOPICS, sortTopics } from './cryptoTopics'
 import {
   VisualAESRound,
   VisualCaesar,
@@ -89,15 +89,7 @@ export default function App() {
   const [sortMode, setSortMode] = useState('timeline')
   const tabRefs = useRef({})
 
-  const topics = useMemo(() => {
-    const base = [...TOPICS]
-    if (sortMode === 'timeline') {
-      base.sort((a, b) => (a.sortYear ?? 0) - (b.sortYear ?? 0))
-    } else if (sortMode === 'effectiveness') {
-      base.sort((a, b) => (b.effectivenessRank ?? 0) - (a.effectivenessRank ?? 0))
-    }
-    return base
-  }, [sortMode])
+  const topics = useMemo(() => sortTopics(TOPICS, sortMode), [sortMode])
 
   const topic = topics.find((t) => t.id === active) ?? TOPICS[0]
 

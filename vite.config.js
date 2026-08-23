@@ -10,4 +10,12 @@ const basePath =
 export default defineConfig({
   base: basePath,
   plugins: [react()],
+  esbuild: {
+    jsx: 'automatic',
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.js'],
+    css: true,
+  },
 })

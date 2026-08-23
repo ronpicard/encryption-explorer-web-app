@@ -7,6 +7,18 @@
  * discovered independently or refined over centuries.
  */
 
+/** @param {ReadonlyArray<{ sortYear?: number, effectivenessRank?: number }>} topics
+ *  @param {string} sortMode */
+export function sortTopics(topics, sortMode) {
+  const base = [...topics]
+  if (sortMode === 'timeline') {
+    base.sort((a, b) => (a.sortYear ?? 0) - (b.sortYear ?? 0))
+  } else if (sortMode === 'effectiveness') {
+    base.sort((a, b) => (b.effectivenessRank ?? 0) - (a.effectivenessRank ?? 0))
+  }
+  return base
+}
+
 export const DISCLAIMER =
   'Times are rough teaching estimates for key recovery or equivalent effort. Real attacks use side channels, implementation bugs, and leaked keys—often far faster than brute force.'
 
