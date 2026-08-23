@@ -44,7 +44,8 @@ function RunCaesar() {
   const [text, setText] = useState('HELLO')
   const [shift, setShift] = useState(3)
   const result = useMemo(() => caesarEncrypt(text, shift), [text, shift])
-  const lettersOnly = text.toUpperCase().replace(/[^A-Z]/g, '')
+  const displayText = text.toUpperCase()
+  const hasLetter = /[A-Z]/.test(displayText)
   return (
     <div className="live-panel">
       <p className="live-hint">Same function as in the sample code above.</p>
@@ -63,9 +64,9 @@ function RunCaesar() {
         />
       </label>
       <Out>
-        {lettersOnly ? (
+        {hasLetter ? (
           <code>
-            caesarEncrypt(&quot;{lettersOnly}&quot;, {shift}) → &quot;{result}&quot;
+            caesarEncrypt(&quot;{displayText}&quot;, {shift}) → &quot;{result}&quot;
           </code>
         ) : (
           <>

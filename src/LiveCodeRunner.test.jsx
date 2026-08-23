@@ -17,6 +17,19 @@ describe('LiveCodeRunner', () => {
     expect(screen.getByRole('status')).toHaveTextContent(/IFMMP/)
   })
 
+  it('shows the full Caesar plaintext in the formula, matching the encrypted result', async () => {
+    const user = userEvent.setup()
+    render(<LiveCodeRunner topicId="caesar" />)
+
+    const text = screen.getByLabelText(/Letters \(A–Z\)/)
+    await user.clear(text)
+    await user.type(text, 'HI THERE')
+
+    const out = screen.getByRole('status')
+    expect(out).toHaveTextContent(/caesarEncrypt\("HI THERE", 3\)/)
+    expect(out).toHaveTextContent(/→ "KL WKHUH"/)
+  })
+
   it('renders nothing for an unknown topic id', () => {
     const { container } = render(<LiveCodeRunner topicId="nope" />)
     expect(container).toBeEmptyDOMElement()

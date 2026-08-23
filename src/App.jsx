@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
-import { DISCLAIMER, GLOSSARY, TOPICS, sortTopics } from './cryptoTopics'
+import { DISCLAIMER, EFFECTIVENESS_MAX, GLOSSARY, TOPICS, sortTopics } from './cryptoTopics'
 import {
   VisualAESRound,
   VisualCaesar,
@@ -168,7 +168,7 @@ export default function App() {
           </span>
           <span className="timeline-strength__meta" aria-live="polite" aria-atomic="true">
             <span className="timeline-strength__rank">{topic.effectivenessRank}</span>
-            <span className="timeline-strength__of">/9</span>
+            <span className="timeline-strength__of">/{EFFECTIVENESS_MAX}</span>
             <span className="timeline-strength__dash"> — </span>
             <span className="timeline-strength__label">{topic.effectivenessLabel}</span>
           </span>
@@ -177,14 +177,14 @@ export default function App() {
           className="timeline-strength__track"
           role="meter"
           aria-valuemin={1}
-          aria-valuemax={9}
+          aria-valuemax={EFFECTIVENESS_MAX}
           aria-valuenow={topic.effectivenessRank}
-          aria-valuetext={`${topic.effectivenessRank} of 9 — ${topic.effectivenessLabel}`}
+          aria-valuetext={`${topic.effectivenessRank} of ${EFFECTIVENESS_MAX} — ${topic.effectivenessLabel}`}
           aria-label={`Encryption strength for ${topic.title}`}
         >
           <div
             className="timeline-strength__fill meter__fill"
-            style={{ width: `${(topic.effectivenessRank / 9) * 100}%` }}
+            style={{ width: `${(topic.effectivenessRank / EFFECTIVENESS_MAX) * 100}%` }}
           />
         </div>
       </section>
@@ -194,8 +194,8 @@ export default function App() {
           <h2>{topic.title}</h2>
           <p className="topic-era">{topic.timeline}</p>
           <p className="topic-kind">
-            {topic.kind === 'asymmetric' ? 'Asymmetric' : 'Symmetric'} · strength {topic.effectivenessRank}/9 (
-            {topic.effectivenessLabel})
+            {topic.kind === 'asymmetric' ? 'Asymmetric' : 'Symmetric'} · strength{' '}
+            {topic.effectivenessRank}/{EFFECTIVENESS_MAX} ({topic.effectivenessLabel})
           </p>
         </header>
 

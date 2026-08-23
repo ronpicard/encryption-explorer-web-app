@@ -192,6 +192,7 @@ function substEncrypt(text) {
     code: `function vigenere(text, key) {
   const A = 65
   const k = key.toUpperCase().replace(/[^A-Z]/g, '')
+  if (!k) return text.toUpperCase()
   let ki = 0
   return [...text.toUpperCase()]
     .map((c) => {
@@ -210,7 +211,7 @@ function substEncrypt(text) {
     timeline: '~1917–present',
     sortYear: 1917,
     kind: 'symmetric',
-    effectivenessRank: 8,
+    effectivenessRank: 7,
     effectivenessLabel: 'Perfect (if used correctly)',
     usedFor:
       'High-security channels where pre-shared key material is feasible (some military/intelligence use-cases).',
@@ -310,7 +311,7 @@ function feistelHalf(L, R, F) {
     timeline: '~1997–2001 (selected → standardized)',
     sortYear: 1997,
     kind: 'symmetric',
-    effectivenessRank: 7,
+    effectivenessRank: 6,
     effectivenessLabel: 'Modern standard',
     usedFor:
       'Bulk encryption everywhere: HTTPS/TLS record encryption, VPNs, disk encryption, messaging, and stored data.',
@@ -364,7 +365,7 @@ function aesRound(state, roundKey) {
     timeline: '~1977–present',
     sortYear: 1977,
     kind: 'asymmetric',
-    effectivenessRank: 6,
+    effectivenessRank: 5,
     effectivenessLabel: 'Strong today (not PQ-safe)',
     usedFor:
       'Certificates, signatures, key exchange (historically), and public-key encryption in systems like HTTPS, PGP, and SSH.',
@@ -430,7 +431,7 @@ function modPow(a, exp, m) {
     timeline: '~2016–2024+ (standardization → rollout)',
     sortYear: 2016,
     kind: 'asymmetric',
-    effectivenessRank: 9,
+    effectivenessRank: 8,
     effectivenessLabel: 'Future-facing',
     usedFor:
       'Replacing or augmenting RSA/ECC in key exchange and signatures so captured traffic stays safe even against future quantum computers.',
@@ -477,3 +478,6 @@ function modPow(a, exp, m) {
 // TLS may combine ECDHE with a PQ KEM for defense in depth.`,
   },
 ]
+
+/** Highest effectivenessRank in TOPICS (contiguous 1…N scale). */
+export const EFFECTIVENESS_MAX = Math.max(...TOPICS.map((t) => t.effectivenessRank))

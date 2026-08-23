@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { DISCLAIMER, GLOSSARY, TOPICS, sortTopics } from './cryptoTopics'
+import { DISCLAIMER, EFFECTIVENESS_MAX, GLOSSARY, TOPICS, sortTopics } from './cryptoTopics'
 
 const REQUIRED_FIELDS = [
   'id',
@@ -31,16 +31,25 @@ describe('TOPICS catalog', () => {
     )
   })
 
-  it('requires core fields, kind, and strength rank 1–9', () => {
+  it('requires core fields, kind, and contiguous strength ranks 1–N', () => {
+    const ranks = TOPICS.map((t) => t.effectivenessRank).sort((a, b) => a - b)
+    expect(ranks).toEqual(Array.from({ length: TOPICS.length }, (_, i) => i + 1))
+    expect(EFFECTIVENESS_MAX).toBe(TOPICS.length)
+
     for (const topic of TOPICS) {
       for (const field of REQUIRED_FIELDS) {
         expect(topic[field], `${topic.id}.${field}`).toBeTruthy()
       }
       expect(['symmetric', 'asymmetric']).toContain(topic.kind)
       expect(topic.effectivenessRank).toBeGreaterThanOrEqual(1)
-      expect(topic.effectivenessRank).toBeLessThanOrEqual(9)
+      expect(topic.effectivenessRank).toBeLessThanOrEqual(EFFECTIVENESS_MAX)
       expect(Number.isFinite(topic.sortYear)).toBe(true)
     }
+  })
+
+  it('guards empty keys in the Vigenère sample snippet', () => {
+    const sample = TOPICS.find((t) => t.id === 'vigenere')?.code ?? ''
+    expect(sample).toMatch(/if\s*\(\s*!k\s*\)/)
   })
 
   it('exposes teaching disclaimer and glossary terms', () => {
@@ -64,7 +73,7 @@ describe('sortTopics', () => {
 
   it('orders by descending effectivenessRank for strength mode', () => {
     const ranks = sortTopics(TOPICS, 'effectiveness').map((t) => t.effectivenessRank)
-    expect(ranks[0]).toBe(9)
+    expect(ranks[0]).toBe(TOPICS.length)
     expect(ranks.at(-1)).toBe(1)
     for (let i = 1; i < ranks.length; i++) {
       expect(ranks[i - 1]).toBeGreaterThanOrEqual(ranks[i])
